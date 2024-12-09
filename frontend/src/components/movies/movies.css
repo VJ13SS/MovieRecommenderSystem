@@ -1,0 +1,41 @@
+.movie-content{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    /*background-color: red;*/
+    width: 100%;
+    overflow: scroll;
+}
+
+.movie-content::-webkit-scrollbar{
+    width: 0;
+    height: 0;
+}
+.movie-content .movie-row{
+    /*background-color: red;*/
+}
+
+.movies{
+    display: flex;
+    margin-top: 10px;
+    gap: 5px;
+}
+
+.movie-row .header{
+    font-size: 22px;
+}
+.movie{
+    height: 150px;
+    width: 150px;
+    border: 1px solid white;
+    border-radius: 15px;
+    /*background-color: red;*/
+    
+}
+
+.movie img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
