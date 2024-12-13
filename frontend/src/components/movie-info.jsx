@@ -3,7 +3,7 @@ import "./movie-info.css";
 export default function MovieInfo({ displaySpinner, movieDetails }) {
   const actors = movieDetails.actors || [];
   const displayActors = actors.map((actor, index) => {
-    return <span key={index}>{actor}</span>;
+    return <span key={index}>{actor} ,</span>;
   });
   console.log(movieDetails.actors);
   return (
@@ -16,9 +16,9 @@ export default function MovieInfo({ displaySpinner, movieDetails }) {
         </div>
         <div className="movie-info">
           <h3>{movieDetails.name}</h3>
-          <span className="actors">{displayActors}</span>
-          <span className="year">{movieDetails.year}</span>
-          <span className="plot">{movieDetails.plot}</span>
+          <span className="actors">Actors : {displayActors}</span>
+          <span className="year">Year : {movieDetails.year}</span>
+          <span className="plot">Plot : {movieDetails.plot}</span>
         </div>
       </div>
     </div>

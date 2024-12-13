@@ -12,7 +12,6 @@ export default function Nav({displaySpinner}) {
       <div className="nav-left">
         <span style={{cursor:'pointer'}}onClick={goToHome}>NOT-FLIX</span>
       </div>
-      <div className="animate"></div>
       <div className="nav-right">
         <button>Sign In</button>
       </div>

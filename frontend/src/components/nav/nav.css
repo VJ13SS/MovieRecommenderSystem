@@ -32,25 +32,3 @@
     
 }
 
-.animate{
-    height: 90%;
-    width: 30px;
-    background-color: red;
-    animation: animate 3s infinite linear;
-    border-radius: 50%;
-}
-
-.animate:hover{
-    background-color:white;
-}
-@keyframes animate {
-    0%{
-        transform: translateX(-300px);
-    }
-    50%{
-        transform: translateX(300px);
-    }
-    100%{
-        transform: translateX(-300px);
-    }
-}

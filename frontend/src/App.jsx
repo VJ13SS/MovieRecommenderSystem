@@ -8,8 +8,8 @@ import Nav from "./components/nav/nav";
 import MovieInfo from "./components/movie-info";
 
 export default function App() {
-  const [displaySpinner, setDisplaySpinner] = useState(false);
-
+  const [displaySpinner, setDisplaySpinner] = useState(true);
+  const [login, setLogin] = useState(true);
   console.log(displaySpinner);
 
   //<Footer displaySpinner={displaySpinner} />
@@ -29,11 +29,10 @@ export default function App() {
     const entries = performance.getEntriesByType("navigation");
     //performance.getEntriesByType() is a part of the performance api which provides information about performance related events durinfg the life cycle of a webpage
     //performance.getEntriesByType("navigation") returns an array of navigation performance entries.For detecting refreshes 'navigate is used
-    
+
     if (entries.length > 0 && entries[0].type === "reload") {
       navigate("/");
     }
-    
   }, []);
   return (
     <div
@@ -41,14 +40,35 @@ export default function App() {
       style={{ justifyContent: displaySpinner ? "center" : "" }}
     >
       <div
-        className="spinner-component"
-        style={{ display: displaySpinner ? "none" : "none" }}
+        className="authentication"
+        style={{ display: displaySpinner ? "flex" : "none" }}
       >
-        Loading
-        <div className="spinner"></div>
-        <button onClick={() => setDisplaySpinner((prev) => !prev)}>
-          Enter
-        </button>
+        <span className="header">N</span>
+        {login && (
+          <div className="login-form">
+            <form action="" className="login">
+              <input type="text" placeholder="Enter your email: " />
+              <input type="text" placeholder="Enter the password: " />
+              <button onClick={() => setDisplaySpinner(false)}>Login</button>
+            </form>
+            <a href="#" onClick={() => setLogin(false)}>
+              new user? Sign in!
+            </a>
+          </div>
+        )}
+        {!login && (
+          <div className="signin-form">
+            <form action="" className="signin">
+              <input type="text" placeholder="Enter your Name: " />
+              <input type="email" placeholder="Enter your email: " />
+              <input type="text" placeholder="Enter the password: " />
+              <button onClick={() => setDisplaySpinner(false)}>Sign in</button>
+            </form>
+            <a href="#" onClick={() => setLogin(true)}>
+              existing user? Login!
+            </a>
+          </div>
+        )}
       </div>
       <Nav displaySpinner={displaySpinner} />
 
