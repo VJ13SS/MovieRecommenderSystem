@@ -1,0 +1,26 @@
+footer {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: gray;
+  border-top: 1px solid white;
+}
+
+a{
+    color: gray;
+}
+
+.links{
+    display: flex;
+    justify-content: space-between;
+}
+
+ul li{
+    margin-block: 5px;
+    font-size: 13px;
+    list-style: none;
+}
+
+

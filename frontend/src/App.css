@@ -14,7 +14,12 @@
     align-items: center;
     color: white;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    
+    overflow-y: scroll;
+}
+
+.app::-webkit-scrollbar{
+    width: 0;
+    height: 0;
 }
 
 .spinner-component{

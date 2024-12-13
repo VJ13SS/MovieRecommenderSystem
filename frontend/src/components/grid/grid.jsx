@@ -12,8 +12,10 @@ export default function Grid() {
           into the dynamic movie exprience
         </p>
       </div>
-      <button>Check all</button>
-      
+      <div className="input">
+        <input type='text' placeholder='Search for a movie...' />
+        <button>Search</button>
+      </div>
       
     </div>
   );

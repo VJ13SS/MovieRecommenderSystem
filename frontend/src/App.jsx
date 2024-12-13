@@ -2,28 +2,47 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 import Content from "./components/content";
+import Footer from "./components/footer/footer";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import Nav from "./components/nav/nav";
+import MovieInfo from "./components/movie-info";
+
 export default function App() {
-  const [displaySpinner, setDisplaySpinner] = useState(true);
+  const [displaySpinner, setDisplaySpinner] = useState(false);
+
   console.log(displaySpinner);
+
+  //<Footer displaySpinner={displaySpinner} />
+  const [movieDetails, setMovieDetails] = useState({});
+  console.log(movieDetails);
+
+  const handleClick = (details) => {
+    setMovieDetails(details);
+  };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    //To hand the page reload
+    //To return to the home page during a page reload
+
+    const entries = performance.getEntriesByType("navigation");
+    //performance.getEntriesByType() is a part of the performance api which provides information about performance related events durinfg the life cycle of a webpage
+    //performance.getEntriesByType("navigation") returns an array of navigation performance entries.For detecting refreshes 'navigate is used
+    
+    if (entries.length > 0 && entries[0].type === "reload") {
+      navigate("/");
+    }
+    
+  }, []);
   return (
     <div
       className="app"
       style={{ justifyContent: displaySpinner ? "center" : "" }}
     >
       <div
-        className="nav"
-        style={{ display: displaySpinner ? "none" : "none" }}
-      >
-        <div className="nav-left">
-          <span>NOT-FLIX</span>
-        </div>
-        <div className="nav-right">
-          <button>Sign In</button>
-        </div>
-      </div>
-      <div
         className="spinner-component"
-        style={{ display: displaySpinner ? "flex" : "none" }}
+        style={{ display: displaySpinner ? "none" : "none" }}
       >
         Loading
         <div className="spinner"></div>
@@ -31,45 +50,29 @@ export default function App() {
           Enter
         </button>
       </div>
+      <Nav displaySpinner={displaySpinner} />
 
-      <div
-        className="grid"
-        style={{ display: displaySpinner ? "none" : "none" }}
-      >
-        <div className="content">
-          <h1>Unlimited <span>Movies</span> Unlimited <span>Fun</span></h1>
-          <p>Ready to enter into the diverse world of movies..?Engage your selves into the dynamic movie exprience</p>
-        </div>
-      </div>
-      <div className="app-content" style={{ display: displaySpinner ? "none" : "none" }}>
-        <div className="movie-row">
-          <span>Trending Now</span>
-          <div className="movies">
-            <div className="movie">
-              <img src="" alt="" />
-            </div>
-            <div className="movie">
-              <img src='' alt="" />
-            </div>
-            <div className="movie">
-              <img src='' alt="" />
-            </div>
-            <div className="movie">
-              <img src='' alt="" />
-            </div>
-            <div className="movie">
-              <img src='' alt="" />
-            </div>
-            <div className="movie">
-              <img src='' alt="" />
-            </div>
-            <div className="movie">
-              <img src='' alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <Content displaySpinner={displaySpinner} />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Content
+              displaySpinner={displaySpinner}
+              onCardClick={handleClick}
+            />
+          }
+        />
+        <Route
+          path="/movie-info"
+          element={
+            <MovieInfo
+              displaySpinner={displaySpinner}
+              movieDetails={movieDetails}
+            />
+          }
+        />
+      </Routes>
+      <Footer displaySpinner={displaySpinner} />
     </div>
   );
 }

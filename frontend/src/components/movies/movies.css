@@ -1,38 +1,53 @@
 .movie-content{
     display: flex;
     align-items: center;
+    flex-direction: column;
+    gap: 10px;
     padding: 5px;
-    /*background-color: red;*/
+   /* background-color: rgb(55, 255, 0);*/
+    height: 500px;
     width: 100%;
-    overflow: scroll;
-}
-
-.movie-content::-webkit-scrollbar{
-    width: 0;
-    height: 0;
-}
-.movie-content .movie-row{
-    /*background-color: red;*/
+    flex-shrink: 0;
 }
 
 .movies{
     display: flex;
     margin-top: 10px;
-    gap: 5px;
+    gap: 10px;
+    /*background-color: green;*/
+    width: 100%;
+    height: 80%;
+    overflow-x: scroll;
 }
 
+.movies::-webkit-scrollbar{
+    width: 0;
+    height: 0;
+}
+
+.movie-row{
+    /*background-color: red;*/
+    width: 100%;
+    height: 50%;
+}
 .movie-row .header{
     font-size: 22px;
 }
 .movie{
-    height: 150px;
+    height: 170px;
     width: 150px;
     border: 1px solid white;
     border-radius: 15px;
     /*background-color: red;*/
-    
+    transition: all 0.3s;
+    flex-shrink: 0;
 }
 
+.movie:hover{
+    width: 190px;
+    height: 190px;
+    border: 3px solid white;
+}
 .movie img{
     height: 100%;
     width: 100%;
