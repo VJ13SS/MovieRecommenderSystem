@@ -20,6 +20,11 @@ export default function App() {
     setMovieDetails(details);
   };
 
+  const handleAuthentications = (e) =>{
+    e.preventDefault()
+    setDisplaySpinner(false)
+  }
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,7 +54,7 @@ export default function App() {
             <form action="" className="login">
               <input type="text" placeholder="Enter your email: " />
               <input type="text" placeholder="Enter the password: " />
-              <button onClick={() => setDisplaySpinner(false)}>Login</button>
+              <button onClick={(e) => handleAuthentications(e)}>Login</button>
             </form>
             <a href="#" onClick={() => setLogin(false)}>
               new user? Sign in!
@@ -62,7 +67,7 @@ export default function App() {
               <input type="text" placeholder="Enter your Name: " />
               <input type="email" placeholder="Enter your email: " />
               <input type="text" placeholder="Enter the password: " />
-              <button onClick={() => setDisplaySpinner(false)}>Sign in</button>
+              <button onClick={(e) => handleAuthentications(e)}>Sign in</button>
             </form>
             <a href="#" onClick={() => setLogin(true)}>
               existing user? Login!
