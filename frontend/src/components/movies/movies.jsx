@@ -2,9 +2,34 @@ import { useNavigate } from "react-router-dom";
 import "./movies.css";
 import recommendationsData from './recommendations'
 import topData from './topRatedData'
+import { useEffect, useState } from "react";
 
-export default function Movies({onCardClick}) {
+export default function Movies({onCardClick , baseUrl}) {
   const navigate = useNavigate();
+  const [popular,setPopular] = useState([])
+  
+  useEffect(()=>{
+    const getTopRated = async () =>{
+      try{
+        const respone = await fetch(baseUrl + '/popular-movies')
+        const data = await respone.json()
+        console.log(data)
+
+        if(!respone.ok){
+          throw new Error('Failed to fetch the topRated movies')
+        }
+        setPopular(data)
+      }
+      catch(error){
+        console.log(error)
+      };
+    }
+    getTopRated()
+  },[])
+
+  const getRecommendations = async () => {
+
+  }
   const getMovie = () =>{
     navigate('/movie-info')
   }
@@ -13,7 +38,8 @@ export default function Movies({onCardClick}) {
     onCardClick(movie)
     getMovie()
   }
-  const topRated = topData.map((movie,index) => {
+  
+  const topRated = popular.map((movie,index) => {
     return(
       <div className="movie" key = {index} onClick={()=>handleClick(movie)}>
             <img src={movie.image} alt="" />
@@ -21,7 +47,7 @@ export default function Movies({onCardClick}) {
     )
   })
 
-  const recommendations = topData.map((movie,index) => {
+  const recommendations = recommendationsData.map((movie,index) => {
     return(
       <div className="movie" key = {index} onClick={()=>handleClick(movie)}>
             <img src={movie.image} alt="" />

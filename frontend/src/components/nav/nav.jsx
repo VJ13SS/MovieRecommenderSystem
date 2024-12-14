@@ -7,13 +7,14 @@ export default function Nav({displaySpinner}) {
   const goToHome = () =>{
     navigate('/')
   }
+  
   return (
     <div className="nav" style={{ display: displaySpinner ? "none" : "flex" }}>
       <div className="nav-left">
         <span style={{cursor:'pointer'}}onClick={goToHome}>NOT-FLIX</span>
       </div>
       <div className="nav-right">
-        <button>Sign In</button>
+        <span>ENJOY FUN</span>
       </div>
     </div>
   );

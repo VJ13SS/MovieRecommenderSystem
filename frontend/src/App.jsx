@@ -6,11 +6,13 @@ import Footer from "./components/footer/footer";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Nav from "./components/nav/nav";
 import MovieInfo from "./components/movie-info";
+import Authentications from "./components/authentications/authentications";
 
 export default function App() {
   const [displaySpinner, setDisplaySpinner] = useState(true);
   const [login, setLogin] = useState(true);
   console.log(displaySpinner);
+  const baseUrl = "http://127.0.0.1:5000";
 
   //<Footer displaySpinner={displaySpinner} />
   const [movieDetails, setMovieDetails] = useState({});
@@ -20,10 +22,10 @@ export default function App() {
     setMovieDetails(details);
   };
 
-  const handleAuthentications = (e) =>{
-    e.preventDefault()
-    setDisplaySpinner(false)
-  }
+  const handleAuthentications = (e) => {
+    e.preventDefault();
+    setDisplaySpinner(false);
+  };
 
   const navigate = useNavigate();
 
@@ -44,37 +46,13 @@ export default function App() {
       className="app"
       style={{ justifyContent: displaySpinner ? "center" : "" }}
     >
-      <div
-        className="authentication"
-        style={{ display: displaySpinner ? "flex" : "none" }}
-      >
-        <span className="header">N</span>
-        {login && (
-          <div className="login-form">
-            <form action="" className="login">
-              <input type="text" placeholder="Enter your email: " />
-              <input type="text" placeholder="Enter the password: " />
-              <button onClick={(e) => handleAuthentications(e)}>Login</button>
-            </form>
-            <a href="#" onClick={() => setLogin(false)}>
-              new user? Sign in!
-            </a>
-          </div>
-        )}
-        {!login && (
-          <div className="signin-form">
-            <form action="" className="signin">
-              <input type="text" placeholder="Enter your Name: " />
-              <input type="email" placeholder="Enter your email: " />
-              <input type="text" placeholder="Enter the password: " />
-              <button onClick={(e) => handleAuthentications(e)}>Sign in</button>
-            </form>
-            <a href="#" onClick={() => setLogin(true)}>
-              existing user? Login!
-            </a>
-          </div>
-        )}
-      </div>
+      <Authentications
+        login={login}
+        setLogin={setLogin}
+        setDisplaySpinner={setDisplaySpinner}
+        displaySpinner={displaySpinner}
+        baseUrl={baseUrl}
+      />
       <Nav displaySpinner={displaySpinner} />
 
       <Routes>
@@ -84,6 +62,7 @@ export default function App() {
             <Content
               displaySpinner={displaySpinner}
               onCardClick={handleClick}
+              baseUrl={baseUrl}
             />
           }
         />
