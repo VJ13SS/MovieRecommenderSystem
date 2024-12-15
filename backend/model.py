@@ -37,3 +37,5 @@ def give_recommendations(movie):
 
 
 top_rated = list(POPULAR_MOVIES['title'][0:10])
+top_rated = [recommend_for(movie) for movie in top_rated]
+
