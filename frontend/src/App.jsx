@@ -11,15 +11,43 @@ import Authentications from "./components/authentications/authentications";
 export default function App() {
   const [displaySpinner, setDisplaySpinner] = useState(true);
   const [login, setLogin] = useState(true);
-  console.log(displaySpinner);
+  const [userLoggedIn, setUserLoggedIn] = useState({
+    name: "",
+    password: "",
+  });
+  const [userMovies,setUserMovies] = useState([])
+  console.log(userMovies.length);
   const baseUrl = "http://127.0.0.1:5000";
 
   //<Footer displaySpinner={displaySpinner} />
   const [movieDetails, setMovieDetails] = useState({});
   console.log(movieDetails);
 
+  const updateUser = async (movie) => {
+    try {
+      userLoggedIn['movie'] = movie
+      console.log('selected movie: ',userLoggedIn)
+      const res = await fetch(baseUrl + "/update-user-movies", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userLoggedIn),
+      });
+      const data = await res.json();
+      setUserMovies(data)
+      if (!res.ok) {
+        console.log(data.error);
+      }
+      console.log('userMovies',data)
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
   const handleClick = (details) => {
     setMovieDetails(details);
+    updateUser(details)
   };
 
   const handleAuthentications = (e) => {
@@ -52,6 +80,8 @@ export default function App() {
         setDisplaySpinner={setDisplaySpinner}
         displaySpinner={displaySpinner}
         baseUrl={baseUrl}
+        setUserLoggedIn={setUserLoggedIn}
+        setUserMovies={setUserMovies}
       />
       <Nav displaySpinner={displaySpinner} />
 
@@ -63,6 +93,7 @@ export default function App() {
               displaySpinner={displaySpinner}
               onCardClick={handleClick}
               baseUrl={baseUrl}
+              userMovies={userMovies}
             />
           }
         />

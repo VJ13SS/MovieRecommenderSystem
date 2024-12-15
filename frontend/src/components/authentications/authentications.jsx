@@ -7,6 +7,8 @@ export default function Authentications({
   setDisplaySpinner,
   displaySpinner,
   baseUrl,
+  setUserLoggedIn,
+  setUserMovies,
 }) {
   const [undefinedField, setUndefinedField] = useState("");
 
@@ -26,6 +28,7 @@ export default function Authentications({
         setUndefinedField(key);
         return;
       }
+      setUserLoggedIn(loginDetails);
       setUndefinedField("");
       console.log(user[key]);
     }
@@ -48,6 +51,7 @@ export default function Authentications({
         setLoginError(true);
         return;
       }
+      setUserMovies(data);
       setLoginError(false);
       console.log("login user: ", data);
       setDisplaySpinner(false);
@@ -90,7 +94,7 @@ export default function Authentications({
       if (!res.ok) {
         throw new Error(data.error);
       }
-      setLogin(true)
+      setLogin(true);
     } catch (error) {
       console.error(error);
     } finally {
@@ -116,7 +120,7 @@ export default function Authentications({
             <input
               type="text"
               placeholder="Enter your name: "
-              value={loginDetails['name']}
+              value={loginDetails["name"]}
               onChange={(e) =>
                 setLoginDetails({ ...loginDetails, name: e.target.value })
               }
@@ -124,7 +128,7 @@ export default function Authentications({
             <input
               type="text"
               placeholder="Enter the password: "
-              value={loginDetails['password']}
+              value={loginDetails["password"]}
               onChange={(e) =>
                 setLoginDetails({ ...loginDetails, password: e.target.value })
               }
@@ -142,19 +146,19 @@ export default function Authentications({
             <input
               type="text"
               placeholder="Enter your Name: "
-              value={user['name']}
+              value={user["name"]}
               onChange={(e) => setUser({ ...user, name: e.target.value })}
             />
             <input
               type="email"
               placeholder="Enter your email: "
-              value={user['email']}
+              value={user["email"]}
               onChange={(e) => setUser({ ...user, email: e.target.value })}
             />
             <input
               type="text"
               placeholder="Enter the password: "
-              value={user['password']}
+              value={user["password"]}
               onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
             <button onClick={(e) => createUser(e)}>Sign in</button>
