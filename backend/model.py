@@ -13,6 +13,14 @@ MATRIX = joblib.load(os.path.join(base,'user_matrix.pkl'))
 POPULAR_MOVIES = joblib.load(os.path.join(base,'user_noticed_movies.pkl'))
 #index = np.random.choice(MATRIX.shape[0])
 
+def recommend_for(movie):
+    url = f'https://www.omdbapi.com/?apikey=ad4bf0da&t={movie}'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        return data
+    return {}
+       
 def give_recommendations(movie):
 
     index = MATRIX.index.get_loc(movie)
@@ -22,7 +30,8 @@ def give_recommendations(movie):
     indices = indices.flatten()[1:]
 
     for i in indices:
-        recommended_movies.append(MATRIX.index[i])
+        movie = MATRIX.index[i]
+        recommended_movies.append(recommend_for(movie))
 
     return recommended_movies
 
