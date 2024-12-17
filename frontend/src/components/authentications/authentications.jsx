@@ -4,13 +4,13 @@ import "./authentications.css";
 export default function Authentications({
   login,
   setLogin,
-  setDisplaySpinner,
-  displaySpinner,
+  setDisplayLogin,
+  displayLogin,
   baseUrl,
   setUserLoggedIn,
   setUserMovies,
 }) {
-  const [undefinedField, setUndefinedField] = useState("");
+  const [undefinedField, setUndefinedField] = useState(""); //To know which field is missed by user while entering the details
 
   //to handle user login
 
@@ -19,10 +19,13 @@ export default function Authentications({
     password: "",
   });
 
-  const [loginError, setLoginError] = useState(false);
+  const [loginError, setLoginError] = useState(false); //Check for any login error
+
   const handleAuthentications = async (e) => {
     e.preventDefault();
+
     console.log("login:", loginDetails);
+
     for (const key in loginDetails) {
       if (loginDetails[key] == "") {
         setUndefinedField(key);
@@ -32,6 +35,7 @@ export default function Authentications({
       setUndefinedField("");
       console.log(user[key]);
     }
+
     try {
       const res = await fetch(baseUrl + "/get-user", {
         method: "POST",
@@ -51,10 +55,12 @@ export default function Authentications({
         setLoginError(true);
         return;
       }
+
       setUserMovies(data);
       setLoginError(false);
-      console.log("login user: ", data);
-      setDisplaySpinner(false);
+
+      console.log("login user movies: ", data);
+      setDisplayLogin(false);
     } catch (error) {
       console.error(error);
     } finally {
@@ -109,7 +115,7 @@ export default function Authentications({
   return (
     <div
       className="authentication"
-      style={{ display: displaySpinner ? "flex" : "none" }}
+      style={{ display: displayLogin ? "flex" : "none" }}
     >
       <span className="header">N</span>
       {undefinedField && <span>{`Undefined Field ${undefinedField}`}</span>}

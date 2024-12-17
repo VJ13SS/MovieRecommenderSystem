@@ -5,8 +5,11 @@ import topData from "./topRatedData";
 import { useEffect, useState } from "react";
 
 export default function Movies({ onCardClick, baseUrl, userMovies }) {
-  const navigate = useNavigate();
-  const [popular, setPopular] = useState([]);
+
+  const navigate = useNavigate();//use navigate hook
+
+  const [popular, setPopular] = useState([]);//to set the popular movies based on user rating
+  
   const displayRecommendations = userMovies.length > 0 ? true : false;
   useEffect(() => {
     const getTopRated = async () => {
@@ -26,7 +29,6 @@ export default function Movies({ onCardClick, baseUrl, userMovies }) {
     getTopRated();
   }, []);
 
-  const getRecommendations = async () => {};
   const getMovie = () => {
     navigate("/movie-info");
   };
@@ -40,7 +42,7 @@ export default function Movies({ onCardClick, baseUrl, userMovies }) {
   const topRated = popular.map((movie, index) => {
     return (
       <div className="movie" key={index} onClick={() => handleClick(movie)}>
-        <img src={movie.image} alt="" />
+        <img src={movie.Poster} alt="" />
       </div>
     );
   });
@@ -48,7 +50,7 @@ export default function Movies({ onCardClick, baseUrl, userMovies }) {
   const recommendations = recommendationsData.map((movie, index) => {
     return (
       <div className="movie" key={index} onClick={() => handleClick(movie)}>
-        <img src={movie.image} alt="" />
+        <img src={movie.Poster} alt="" />
       </div>
     );
   });

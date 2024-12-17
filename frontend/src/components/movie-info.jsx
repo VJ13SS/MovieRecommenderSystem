@@ -1,24 +1,19 @@
 import "./movie-info.css";
 
-export default function MovieInfo({ displaySpinner, movieDetails }) {
-  const actors = movieDetails.actors || [];
-  const displayActors = actors.map((actor, index) => {
-    return <span key={index}>{actor} ,</span>;
-  });
-  console.log(movieDetails.actors);
+export default function MovieInfo({ displayLogin, movieDetails }) {
   return (
-    <div className="info" style={{ display: displaySpinner ? "none" : "flex" }}>
-      <img src={movieDetails.image} alt="" />
+    <div className="info" style={{ display: displayLogin ? "none" : "flex" }}>
+      <img src={movieDetails.Poster} alt="" />
 
       <div className="details">
         <div className="img">
-          <img src={movieDetails.image} alt="" />
+          <img src={movieDetails.Poster} alt="" />
         </div>
         <div className="movie-info">
-          <h3>{movieDetails.name}</h3>
-          <span className="actors">Actors : {displayActors}</span>
-          <span className="year">Year : {movieDetails.year}</span>
-          <span className="plot">Plot : {movieDetails.plot}</span>
+          <h3>{movieDetails.Title}</h3>
+          <span className="actors">Actors : {movieDetails.Actors}</span>
+          <span className="year">Year : {movieDetails.Year}</span>
+          <span className="plot">Plot : {movieDetails.Plot}</span>
         </div>
       </div>
     </div>

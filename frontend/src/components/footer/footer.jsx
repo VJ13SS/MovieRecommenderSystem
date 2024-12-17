@@ -1,8 +1,8 @@
-import './footer.css'
+import "./footer.css";
 
-export default function Footer({displaySpinner}) {
+export default function Footer({ displayLogin }) {
   return (
-    <footer style={{ display: displaySpinner ? "none" : "flex" }}>
+    <footer style={{ display: displayLogin ? "none" : "flex" }}>
       <span>
         Questions? Call <a href="#">000-800-919-1743</a>
       </span>

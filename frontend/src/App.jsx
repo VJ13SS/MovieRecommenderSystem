@@ -9,24 +9,26 @@ import MovieInfo from "./components/movie-info";
 import Authentications from "./components/authentications/authentications";
 
 export default function App() {
-  const [displaySpinner, setDisplaySpinner] = useState(true);
-  const [login, setLogin] = useState(true);
+  const [displayLogin, setDisplayLogin] = useState(true); //to display the login screen
+
+  const [login, setLogin] = useState(false);
   const [userLoggedIn, setUserLoggedIn] = useState({
     name: "",
     password: "",
   });
-  const [userMovies,setUserMovies] = useState([])
-  console.log(userMovies.length);
+
+  const [userMovies, setUserMovies] = useState([]);
+
   const baseUrl = "http://127.0.0.1:5000";
 
-  //<Footer displaySpinner={displaySpinner} />
   const [movieDetails, setMovieDetails] = useState({});
-  console.log(movieDetails);
+
+  //function used to update the user preference of movies(add movies chosen by the user to the database) and to get the recommendations based on them
 
   const updateUser = async (movie) => {
     try {
-      userLoggedIn['movie'] = movie
-      console.log('selected movie: ',userLoggedIn)
+      userLoggedIn["movie"] = movie.Title;
+      console.log("selected movie: ", userLoggedIn);
       const res = await fetch(baseUrl + "/update-user-movies", {
         method: "POST",
         headers: {
@@ -35,11 +37,11 @@ export default function App() {
         body: JSON.stringify(userLoggedIn),
       });
       const data = await res.json();
-      setUserMovies(data)
+      setUserMovies(data);
       if (!res.ok) {
         console.log(data.error);
       }
-      console.log('userMovies',data)
+      console.log("Recommended Movies", data);
     } catch (error) {
       throw new Error(error);
     }
@@ -47,12 +49,7 @@ export default function App() {
 
   const handleClick = (details) => {
     setMovieDetails(details);
-    updateUser(details)
-  };
-
-  const handleAuthentications = (e) => {
-    e.preventDefault();
-    setDisplaySpinner(false);
+    updateUser(details);
   };
 
   const navigate = useNavigate();
@@ -72,28 +69,29 @@ export default function App() {
   return (
     <div
       className="app"
-      style={{ justifyContent: displaySpinner ? "center" : "" }}
+      style={{ justifyContent: displayLogin ? "center" : "" }}
     >
       <Authentications
         login={login}
         setLogin={setLogin}
-        setDisplaySpinner={setDisplaySpinner}
-        displaySpinner={displaySpinner}
+        setDisplayLogin={setDisplayLogin}
+        displayLogin={displayLogin}
         baseUrl={baseUrl}
         setUserLoggedIn={setUserLoggedIn}
         setUserMovies={setUserMovies}
       />
-      <Nav displaySpinner={displaySpinner} />
+      <Nav displayLogin={displayLogin} />
 
       <Routes>
         <Route
           path="/"
           element={
             <Content
-              displaySpinner={displaySpinner}
+              displayLogin={displayLogin}
               onCardClick={handleClick}
               baseUrl={baseUrl}
               userMovies={userMovies}
+              setMovieDetails={setMovieDetails}
             />
           }
         />
@@ -101,13 +99,13 @@ export default function App() {
           path="/movie-info"
           element={
             <MovieInfo
-              displaySpinner={displaySpinner}
+              displayLogin={displayLogin}
               movieDetails={movieDetails}
             />
           }
         />
       </Routes>
-      <Footer displaySpinner={displaySpinner} />
+      <Footer displayLogin={displayLogin} />
     </div>
   );
 }

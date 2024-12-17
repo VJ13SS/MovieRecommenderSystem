@@ -7,7 +7,7 @@ class Users(db.Model):
     name = db.Column(db.String(50),nullable = False)
     email = db.Column(db.String(100),nullable = False)
     password = db.Column(db.String(50),nullable = False)
-    movies = db.relationship('Movies',backref = 'users',passive_deletes = True)
+    movies = db.relationship('Movies',backref = 'users',passive_deletes = True)#in backref the database name should be given in small letters
     
 
     def to_json(self):

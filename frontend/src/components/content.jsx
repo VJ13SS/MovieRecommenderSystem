@@ -1,19 +1,25 @@
 import "./content.css";
-import Footer from "./footer/footer";
 import Grid from "./grid/grid";
-import MovieInfo from "./movie-info";
 import Movies from "./movies/movies";
-import Nav from "./nav/nav";
 
-export default function Content({ displaySpinner , onCardClick ,baseUrl,userMovies}) {
-  
+export default function Content({
+  displayLogin,
+  onCardClick,
+  baseUrl,
+  userMovies,
+  setMovieDetails,
+}) {
   return (
     <div
       className="app-content"
-      style={{ display: displaySpinner ? "none" : "flex" }}
+      style={{ display: displayLogin ? "none" : "flex" }}
     >
-      <Grid />
-      <Movies onCardClick={onCardClick} baseUrl = {baseUrl} userMovies={userMovies}/>
+      <Grid setMovieDetails={setMovieDetails} />
+      <Movies
+        onCardClick={onCardClick}
+        baseUrl={baseUrl}
+        userMovies={userMovies}
+      />
     </div>
   );
 }
