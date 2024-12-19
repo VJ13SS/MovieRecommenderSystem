@@ -14,7 +14,7 @@ export default function Content({
       className="app-content"
       style={{ display: displayLogin ? "none" : "flex" }}
     >
-      <Grid setMovieDetails={setMovieDetails} />
+      <Grid setMovieDetails={setMovieDetails} userMovies={userMovies} />
       <Movies
         onCardClick={onCardClick}
         baseUrl={baseUrl}

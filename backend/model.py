@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import os
 import requests
+import random
 
 print(os.getcwd())
 print('Hello World')
@@ -18,7 +19,9 @@ def get_details_for(movie):
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()
-        return data
+        if 'Actors' and 'Poster' and 'Title' and 'Plot' and 'Year' in data:
+            return data
+        return {}
     return {}
        
 def give_recommendations(movie):
@@ -38,15 +41,16 @@ def give_recommendations(movie):
     except:
         return []
 
-popular = list(POPULAR_MOVIES['title'])[:20]
+POPULAR_MOVIES = list(POPULAR_MOVIES['title'])
+popular = random.sample(POPULAR_MOVIES,20)
+print(popular)
 top_rated = []
+
 
 for movie in popular:
     response = get_details_for(movie)
-    if 'Actors' and 'Poster' and 'Title' and 'Plot' and 'Year' in response:
+    if response != {}:
         top_rated.append(response)
     if len(top_rated) == 15:
         break
-
-#top_rated = [get_details_for(movie) for movie in top_rated]
 

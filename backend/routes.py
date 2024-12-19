@@ -1,6 +1,7 @@
 from flask import Blueprint,jsonify,request
-from model import top_rated,give_recommendations,get_details_for
+from model import top_rated,give_recommendations,get_details_for,popular
 from database import Users,db,Movies
+import random 
 
 main = Blueprint('main',__name__)
 
@@ -33,8 +34,6 @@ def create_user():
 def get_user():
     try:
         data = request.get_json() 
-        
-        required_fields = ['name','password']
 
         for field in data:
             if not data.get(field):
@@ -45,15 +44,12 @@ def get_user():
 
         user = Users.query.filter_by(name = name,password = password).first()
 
-        user_movies = Movies.query.filter_by(user = user.id).all()
-        user_movies = [movie.movie for movie in user_movies]
-
         if user:
-            return user_movies
-        
-        
-        
-        
+            user_movies = Movies.query.filter_by(user = user.id).all()
+            user_movies = [movie.movie for movie in user_movies]
+            user_movies = [get_details_for(movie) for movie in user_movies][::-1]
+
+            return user_movies[:10] #returns the latest movies selected by he user
         return jsonify('user not found')
     except Exception as e:
         return jsonify({'error':str(e)}),500
@@ -75,21 +71,31 @@ def update_user_movies():
             db.session.add(new_movie)
             db.session.commit()
         
-        
         user_movies = Movies.query.filter_by(user = logged_in_user.id).all()
-        user_movies = [movie.movie for movie in user_movies]
+        user_movies = [movie.movie for movie in user_movies][::-1]#To get the latest added movies to the dataset
+        #user_movies = user_movies[:5]
         
         #Get Recommended Movies
         recommendations = []
         for movie in user_movies:
             recommended = give_recommendations(movie)
+            recommended = [movie for movie in recommended if movie != {}]
             recommendations = recommendations + recommended
-        print('r',recommendations)
+
         recommendations = list(set(recommendations))
-        
-        #recommendations = [get_details_for(movie) for movie in recommendations]
-        
-        return recommendations
+        recommendations = random.sample(recommendations,20)
+        print(recommendations)
+        recommended_movie_details = []
+
+        for movie in recommendations:
+            details = get_details_for(movie)
+            if details != {}:
+                recommended_movie_details.append(details)
+            if len(recommended_movie_details) == 10:
+                break
+
+        return recommended_movie_details
+    
     except Exception as e:
         return jsonify({'error':str(e)}),400
 

@@ -5,12 +5,13 @@ import topData from "./topRatedData";
 import { useEffect, useState } from "react";
 
 export default function Movies({ onCardClick, baseUrl, userMovies }) {
+  const navigate = useNavigate(); //use navigate hook
 
-  const navigate = useNavigate();//use navigate hook
+  const [popular, setPopular] = useState([]); //to set the popular movies based on user rating
 
-  const [popular, setPopular] = useState([]);//to set the popular movies based on user rating
-  
+  const displayPopularMovies = popular.length > 0 ? true : false;
   const displayRecommendations = userMovies.length > 0 ? true : false;
+
   useEffect(() => {
     const getTopRated = async () => {
       try {
@@ -47,7 +48,7 @@ export default function Movies({ onCardClick, baseUrl, userMovies }) {
     );
   });
 
-  const recommendations = recommendationsData.map((movie, index) => {
+  const recommendations = userMovies.map((movie, index) => {
     return (
       <div className="movie" key={index} onClick={() => handleClick(movie)}>
         <img src={movie.Poster} alt="" />
@@ -57,10 +58,41 @@ export default function Movies({ onCardClick, baseUrl, userMovies }) {
 
   return (
     <div className="movie-content" id="movie-content">
-      <div className="movie-row">
-        <span className="header">Trending Now</span>
-        <div className="movies">{topRated}</div>
-      </div>
+      {/* This will be displayed while the top rated movies are being fetched from the backend*/}
+      {!displayPopularMovies && (
+        <div className="recommendations-info">
+          <span>Fetching the top rated movies...!</span>
+          <div className="spinner-component">
+            <div className="spinner"></div>
+            <span>Loading</span>
+          </div>
+        </div>
+      )}
+
+      {/* Popular Movies will be displayed after being fetched from the backend*/}
+      {displayPopularMovies && (
+        <div className="movie-row">
+          <span className="header">Trending Now</span>
+          <div className="movies">{topRated}</div>
+        </div>
+      )}
+
+      {/* This will be displayed when there are no recommendations or while the recommendations are being fetched from the backend*/}
+      {!displayRecommendations && (
+        <div className="recommendations-info">
+          <span>*We are fetching your Recommendations...!</span>
+          <span>
+            **If you are a new user! select with any of the top rated movies to
+            get your recommendations...!
+          </span>
+          <div className="spinner-component">
+            <div className="spinner"></div>
+            <span>Loading</span>
+          </div>
+        </div>
+      )}
+
+      {/* This will be displayed when the recommended movies are being fetched from the backend*/}
       {displayRecommendations && (
         <div className="movie-row">
           <span className="header">Your Recommendations</span>

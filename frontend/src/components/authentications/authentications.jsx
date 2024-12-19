@@ -20,7 +20,7 @@ export default function Authentications({
   });
 
   const [loginError, setLoginError] = useState(false); //Check for any login error
-
+  const [loginMsg, setLoginMsg] = useState(false);
   const handleAuthentications = async (e) => {
     e.preventDefault();
 
@@ -31,11 +31,11 @@ export default function Authentications({
         setUndefinedField(key);
         return;
       }
-      setUserLoggedIn(loginDetails);
-      setUndefinedField("");
-      console.log(user[key]);
     }
-
+    setUserLoggedIn(loginDetails);
+    setUndefinedField("");
+    console.log(user);
+    setLoginMsg(true);
     try {
       const res = await fetch(baseUrl + "/get-user", {
         method: "POST",
@@ -57,6 +57,7 @@ export default function Authentications({
       }
 
       setUserMovies(data);
+      setLoginMsg(false); //When the data is fetched from the Api the msg disaapears
       setLoginError(false);
 
       console.log("login user movies: ", data);
@@ -120,6 +121,7 @@ export default function Authentications({
       <span className="header">N</span>
       {undefinedField && <span>{`Undefined Field ${undefinedField}`}</span>}
       {loginError && <span>Invalid Username or Password</span>}
+      {loginMsg && <span>Please wait...We are fetching your data</span>}
       {login && (
         <div className="login-form">
           <form action="" className="login">

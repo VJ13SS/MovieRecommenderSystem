@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import './grid.css'
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import "./grid.css";
+import { useNavigate } from "react-router-dom";
 
-export default function Grid({setMovieDetails}) {
+export default function Grid({ setMovieDetails, userMovies }) {
   const navigate = useNavigate();
-  const [userInput,setUserInput] = useState('')
+  const [userInput, setUserInput] = useState("");
+  const displayMovieSearch = userMovies.length > 0 ? true : false;
   const getMovie = () => {
     navigate("/movie-info");
   };
@@ -16,14 +17,16 @@ export default function Grid({setMovieDetails}) {
   };
 
   const searchMovie = async (movie) => {
-    const response = await fetch (`https://www.omdbapi.com/?apikey=ad4bf0da&t=${movie}`)
-    const data = await response.json()
+    const response = await fetch(
+      `https://www.omdbapi.com/?apikey=ad4bf0da&t=${movie}`
+    );
+    const data = await response.json();
 
-    if(!response.ok|| data == 'Movie not found!'){
-      return ;
+    if (!response.ok || data == "Movie not found!") {
+      return;
     }
-    handleClick(data)
-  }
+    handleClick(data);
+  };
   return (
     <div className="grid">
       <div className="content">
@@ -35,11 +38,17 @@ export default function Grid({setMovieDetails}) {
           into the dynamic movie exprience
         </p>
       </div>
-      <div className="input">
-        <input type='text' placeholder='Search for a movie...' onChange={(e) => setUserInput(e.target.value)} value={userInput}/>
-        <button onClick={() => searchMovie(userInput)}>Search</button>
-      </div>
-      
+      {displayMovieSearch && (
+        <div className="input">
+          <input
+            type="text"
+            placeholder="Search for a movie..."
+            onChange={(e) => setUserInput(e.target.value)}
+            value={userInput}
+          />
+          <button onClick={() => searchMovie(userInput)}>Search</button>
+        </div>
+      )}
     </div>
   );
 }

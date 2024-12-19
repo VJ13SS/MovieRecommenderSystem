@@ -11,7 +11,7 @@ import Authentications from "./components/authentications/authentications";
 export default function App() {
   const [displayLogin, setDisplayLogin] = useState(true); //to display the login screen
 
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   const [userLoggedIn, setUserLoggedIn] = useState({
     name: "",
     password: "",
@@ -41,7 +41,7 @@ export default function App() {
       if (!res.ok) {
         console.log(data.error);
       }
-      console.log("Recommended Movies", data);
+      console.log("Recommended Movies", userMovies);
     } catch (error) {
       throw new Error(error);
     }
