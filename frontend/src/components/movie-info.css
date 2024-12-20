@@ -69,20 +69,32 @@
     font-size: 15px;
 }
 
-@media (max-width:1050px){
+@media (max-width:750px){
     .info .details{
         flex-direction: column;
         align-items: center;
     }
     .details .img{
-        height: 100vh;
+        height: 40vh;
         width:90%;
     }
-    .details .movie-info{
+    .movie-info .plot,.details .actors,.details .year{
+        font-size: 1rem;
+    }
+
+}
+
+@media (min-width: 750px) and (max-width:1020px){
+    .info .details{
+        flex-direction: column;
         align-items: center;
     }
+    .details .img{
+        height: 50vh;
+        width:90%;
+    }
     .movie-info .plot,.details .actors,.details .year{
-        font-size: large;
+        font-size: 2rem;
     }
 
 }

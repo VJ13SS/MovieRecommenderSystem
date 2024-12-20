@@ -6,6 +6,8 @@ export default function Grid({ setMovieDetails, userMovies }) {
   const navigate = useNavigate();
   const [userInput, setUserInput] = useState("");
   const displayMovieSearch = userMovies.length > 0 ? true : false;
+  const [displaySpinner,setDisplaySpinner] = useState(false)
+
   const getMovie = () => {
     navigate("/movie-info");
   };
@@ -17,6 +19,7 @@ export default function Grid({ setMovieDetails, userMovies }) {
   };
 
   const searchMovie = async (movie) => {
+    setDisplaySpinner(true)
     const response = await fetch(
       `https://www.omdbapi.com/?apikey=ad4bf0da&t=${movie}`
     );
@@ -46,7 +49,7 @@ export default function Grid({ setMovieDetails, userMovies }) {
             onChange={(e) => setUserInput(e.target.value)}
             value={userInput}
           />
-          <button onClick={() => searchMovie(userInput)}>Search</button>
+          <button onClick={() => searchMovie(userInput)}>Search <div className="spinner" style={{display:displaySpinner?'block':'none'}}></div></button>
         </div>
       )}
     </div>
