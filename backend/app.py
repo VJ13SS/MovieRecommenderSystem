@@ -3,6 +3,8 @@ from flask_cors import CORS
 from routes import main
 from database import db
 
+#Link to the colab notebook 
+#https://colab.research.google.com/drive/1Ic7z0UhCWWWLDiIbXgEdtqgtLu9m6kVP?usp=sharing
 
 app = Flask(__name__)
 CORS(app)
